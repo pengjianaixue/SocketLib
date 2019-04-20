@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Form Files">
+      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
+      <Extensions>ui</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Generated Files">
+      <UniqueIdentifier>{71ED8ED8-ACB9-4CE9-BBE1-E00B30144E11}</UniqueIdentifier>
+      <Extensions>moc;h;cpp</Extensions>
+      <SourceControlFiles>False</SourceControlFiles>
+    </Filter>
+    <Filter Include="RCF">
+      <UniqueIdentifier>{69e62915-4d99-42be-90c4-b6c533bfb696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logout">
+      <UniqueIdentifier>{165dbeec-72fe-4d77-a7d3-ae369394bf6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="communication">
+      <UniqueIdentifier>{1529270d-20f9-4ee9-8ee7-7e072e625dc2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PythonRunner">
+      <UniqueIdentifier>{bf877300-23fa-4bd8-93ce-5dd820317508}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{6ff1d0cf-bd5a-4436-92b4-c5188e0746c8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RCF\RCFServer.cpp">
+      <Filter>RCF</Filter>
+    </ClCompile>
+    <ClCompile Include="ClogServer.cpp">
+      <Filter>Logout</Filter>
+    </ClCompile>
+    <ClCompile Include="CSerialPort.cpp">
+      <Filter>communication</Filter>
+    </ClCompile>
+    <ClCompile Include="CSockt.cpp">
+      <Filter>communication</Filter>
+    </ClCompile>
+    <ClCompile Include="CVisaCommunication.cpp">
+      <Filter>communication</Filter>
+    </ClCompile>
+    <ClCompile Include="PyRunner.cpp">
+      <Filter>PythonRunner</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="QTest.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="InstumentSet.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="MainWindow.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="Config.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="QTest.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="TypeDef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Resoure.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RCF\RCFServer.h">
+      <Filter>RCF</Filter>
+    </ClInclude>
+    <ClInclude Include="RCF\ServiceInterface.hpp">
+      <Filter>RCF</Filter>
+    </ClInclude>
+    <ClInclude Include="ClogServer.h">
+      <Filter>Logout</Filter>
+    </ClInclude>
+    <ClInclude Include="CSerialPort.h">
+      <Filter>communication</Filter>
+    </ClInclude>
+    <ClInclude Include="CSockt.h">
+      <Filter>communication</Filter>
+    </ClInclude>
+    <ClInclude Include="CVisaCommunication.h">
+      <Filter>communication</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="PyRunner.h">
+      <Filter>PythonRunner</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="QTest.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ImageResource\Test.ico" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="QTest">
+    <file>Resources/打开文件.png</file>
+    <file>Resources/保存.png</file>
+  </qresource>
+</RCC>
