@@ -1,6 +1,8 @@
 #include "CSockt.h"
 #pragma comment(lib,"ws2_32.lib")
-CSockt::CSockt(std::string IpAddr, std::string PortNum, SOCKTTYPE socktype, CLIENTTYPE clienttype) :m_sockthandle(INVALID_SOCKET),
+//CRITICAL_SECTION			CSockt::s_Critical_Section;
+//std::atomic<unsigned int>	CSockt::s_CriticalSectionCounter=0;
+CSockt::CSockt(const std::string &IpAddr, const std::string &PortNum, SOCKTTYPE socktype, CLIENTTYPE clienttype) :m_sockthandle(INVALID_SOCKET),
 																									m_ClientType(clienttype),
 																									m_IpAddr(IpAddr),
 																									m_PortNum(PortNum),
@@ -8,11 +10,14 @@ CSockt::CSockt(std::string IpAddr, std::string PortNum, SOCKTTYPE socktype, CLIE
 																									m_SokcetType(socktype),
 																									m_ConnectFlag(false),
 																									m_ServerThreadRunflag(false),
-																									m_TcpServerAccpetfalg(false)
+																									m_TcpServerAccpetfalg(false),
+																									m_recvibuf(new  char[200000])
 
 {
 	
 	//ZeroMemory(&m_RemoteAddr, sizeof(m_RemoteAddr));//Content Zero
+	::InitializeCriticalSection(&m_Critical_Section);
+	//s_CriticalSectionCounter += 1;
 	SokctLoadinit();
 	if (socktype == SOCKTTYPE::TCP) //TCP
 	{
@@ -78,6 +83,10 @@ CSockt::~CSockt()
 	}
 	closesocket(this->m_sockthandle);
 	this->m_sockthandle = INVALID_SOCKET;
+	::DeleteCriticalSection(&m_Critical_Section);
+	delete[] m_recvibuf;
+	//s_CriticalSectionCounter -= 1;
+	
 }
 bool CSockt::Connect()
 {
@@ -132,17 +141,13 @@ bool CSockt::Connect()
 			
 			if (bind(m_sockthandle, (sockaddr*)&m_RemoteAddr, sizeof(m_RemoteAddr)) == SOCKET_ERROR)
 			{
-
-
 				DEBUGMSG(" Bind UDP sockt server addr fail !!!")
 				closesocket(m_sockthandle);
 				WSACleanup();
 				return false;
-
 			}
 			else
 			{
-
 				DEBUGMSG(" Bind UDP sockt server addr Success !!!")
 				m_ServerThreadRunflag = true;
 				m_Serverrecvithread = new std::thread(ServerListenThread, this);
@@ -172,7 +177,7 @@ bool CSockt::IsConnect()
 	return m_ConnectFlag;
 }
 
-int CSockt::SendData(std::string Data, int SendNum)
+int CSockt::SendData(const std::string &Data, int SendNum)
 {
 	if (this->m_sockthandle == INVALID_SOCKET)
 	{
@@ -244,7 +249,6 @@ int CSockt::Recvi(std::string &recvidata, int recvilength)
 
 		if (this->m_ClientType == CLIENTTYPE::Client)
 		{
-			
 			int sendnum = recv(this->m_sockthandle, recvidatabuf, recvilength,0);
 			recvidata = recvidatabuf;
 			delete[] recvidatabuf;
@@ -252,29 +256,27 @@ int CSockt::Recvi(std::string &recvidata, int recvilength)
 		}
 		else if (this->m_ClientType == CLIENTTYPE::Server)
 		{
-			if (m_Recvibuf.size()>0)
+			if (m_Recvibufdeque.size()>0)
 			{
 				if (recvilength!=AllDATA)
 				{	
-					for (size_t i = 0; i <= m_Recvibuf.size(); i++)
+					for (size_t i = 0; i <= m_Recvibufdeque.size(); i++)
 					{
 						if (recvidata.length() < recvilength)
 						{
-							m_server_recvi_var_mutex.lock();
-							recvidata.append(m_Recvibuf.front());
-							m_Recvibuf.pop_front();
-							m_server_recvi_var_mutex.unlock();
+							CriticalSectionLockGuardian cslock(m_Critical_Section);
+							recvidata.append(m_Recvibufdeque.front());
+							m_Recvibufdeque.pop_front();
 						}
 					}
 				}
 				else
 				{
-					for (size_t i = 0; i < m_Recvibuf.size(); i++)
+					for (size_t i = 0; i < m_Recvibufdeque.size(); i++)
 					{
-						m_server_recvi_var_mutex.lock();
-						recvidata.append(m_Recvibuf.front());
-						m_Recvibuf.pop_front();
-						m_server_recvi_var_mutex.unlock();
+						CriticalSectionLockGuardian cslock(m_Critical_Section);
+						recvidata.append(m_Recvibufdeque.front());
+						m_Recvibufdeque.pop_front();
 					}
 				}
 			}
@@ -290,30 +292,28 @@ int CSockt::Recvi(std::string &recvidata, int recvilength)
 		}
 		else if (this->m_ClientType == CLIENTTYPE::Server)
 		{
-			if (m_Recvibuf.size()>0)
+			if (m_Recvibufdeque.size()>0)
 			{
 				if (recvilength != AllDATA)
 				{
-					for (size_t i = 0; i < m_Recvibuf.size(); i++)
+					for (size_t i = 0; i < m_Recvibufdeque.size(); i++)
 					{
-
 						if (recvidata.length() < recvilength)
 						{
-							m_server_recvi_var_mutex.lock();
-							recvidata.append(m_Recvibuf.front());
-							m_Recvibuf.pop_front();
-							m_server_recvi_var_mutex.unlock();
+							CriticalSectionLockGuardian cslock(m_Critical_Section);;
+							recvidata.append(m_Recvibufdeque.front());
+							m_Recvibufdeque.pop_front();
 						}
 					}
 				}
 				else
 				{
-					for (size_t i = 0; i < m_Recvibuf.size(); i++)
+					for (size_t i = 0; i < m_Recvibufdeque.size(); i++)
 					{
-						m_server_recvi_var_mutex.lock();
-						recvidata.append(m_Recvibuf.front());
-						m_Recvibuf.pop_front();
-						m_server_recvi_var_mutex.unlock();
+						CriticalSectionLockGuardian cslock(m_Critical_Section);;
+						recvidata.append(m_Recvibufdeque.front());
+						m_Recvibufdeque.pop_front();
+						
 					}
 				}
 			}
@@ -329,7 +329,7 @@ bool CSockt::GetServerLinkinfor(SOCKTTYPE sockttype, SOCKADDR_IN & clientinforge
 	return false;
 }
 
-bool CSockt::SetUDPRemoteAddr(std::string Ipaddr, std::string Port)
+bool CSockt::SetUDPRemoteAddr(const std::string &Ipaddr, const std::string &Port)
 {
 	try
 	{	
@@ -340,7 +340,6 @@ bool CSockt::SetUDPRemoteAddr(std::string Ipaddr, std::string Port)
 	}
 	catch (const std::exception& e)
 	{
-		
 		DEBUGMSG(" Set the UDPRemoteAddr fail: !!!");
 		return false;
 
@@ -348,10 +347,10 @@ bool CSockt::SetUDPRemoteAddr(std::string Ipaddr, std::string Port)
 	return false;	
 }
 
-std::string CSockt::recvithreadfun()
+const char* CSockt::recvithreadfun()
 {
-	char *recvibuf = new char[20000];
-	memset(recvibuf, 0, 20000);
+	
+	memset(m_recvibuf, 0, 200000);
 	if (this->m_SokcetType == SOCKTTYPE::TCP)
 	{
 		if (!m_TcpServerAccpetfalg)
@@ -360,7 +359,7 @@ std::string CSockt::recvithreadfun()
 			{
 				closesocket(this->m_sockthandle);
 				WSACleanup();
-				return false;
+				return nullptr;
 			}
 			int addrlen = sizeof(m_TCPServerAccpet);
 			if ((m_ServerAppcet = accept(this->m_sockthandle, (sockaddr*)(&m_TCPServerAccpet), &addrlen)) == INVALID_SOCKET)
@@ -368,30 +367,28 @@ std::string CSockt::recvithreadfun()
 
 				closesocket(this->m_sockthandle);
 				WSACleanup();
-				return false;
+				return nullptr;
 			}
 			else
 			{
 				m_TcpServerAccpetfalg = true;
 			}
 		}
-		recv(this->m_ServerAppcet, recvibuf,20000,0);
-		DEBUGMSG(std::string(recvibuf));
-		return std::string(recvibuf);
+		recv(this->m_ServerAppcet, (char*)(m_recvibuf),20000,0);
+		DEBUGMSG(std::string(m_recvibuf));
+		return m_recvibuf;
 	}
 	else if (this->m_SokcetType == SOCKTTYPE::UDP)
 	{
-
 		if (this->m_UDPRemoteAddr.sin_port!=0)
 		{
 			int len = sizeof(m_UDPRemoteAddr);
-			recvfrom(m_sockthandle, recvibuf, 2000, 0, (SOCKADDR*)&m_UDPRemoteAddr, &len);
-			DEBUGMSG(std::string(recvibuf));
-			return std::string(recvibuf);
+			recvfrom(m_sockthandle, m_recvibuf, 2000, 0, (SOCKADDR*)&m_UDPRemoteAddr, &len);
+			DEBUGMSG(std::string(m_recvibuf));
+			return m_recvibuf;
 		}
 	}
-	delete[] recvibuf;
-	return std::string();
+	return nullptr;
 }
 
 bool CSockt::SokctLoadinit()
@@ -407,12 +404,15 @@ bool CSockt::SokctLoadinit()
 
 void CSockt::ServerListenThread(LPVOID Param)
 {
+	
 	CSockt *Serverthread = static_cast<CSockt *>(Param);
 	while (Serverthread->m_ServerThreadRunflag)
 	{
-		std::string recvi = Serverthread->recvithreadfun();
-		Serverthread->m_server_recvi_var_mutex.lock();
-		Serverthread->m_Recvibuf.push_back(recvi);
-		Serverthread->m_server_recvi_var_mutex.unlock();
+
+		/*select(Serverthread->m_sockthandle);*/
+		std::this_thread::yield();
+		const char* recvi = Serverthread->recvithreadfun();
+		CriticalSectionLockGuardian cslock(Serverthread->m_Critical_Section);
+		Serverthread->m_Recvibufdeque.push_back(recvi);
 	}
 }

@@ -43,6 +43,15 @@
     <Filter Include="Utility">
       <UniqueIdentifier>{6ff1d0cf-bd5a-4436-92b4-c5188e0746c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="communication\Socket">
+      <UniqueIdentifier>{d1d238cb-ca65-408b-a548-4a41fd6a9422}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="communication\Socket\headers">
+      <UniqueIdentifier>{923e3c1a-7b11-4311-b0d1-31f571de5feb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="communication\Socket\imple">
+      <UniqueIdentifier>{61484333-4d02-423b-b884-d05ca2d2840b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -60,14 +69,23 @@
     <ClCompile Include="CSerialPort.cpp">
       <Filter>communication</Filter>
     </ClCompile>
-    <ClCompile Include="CSockt.cpp">
-      <Filter>communication</Filter>
-    </ClCompile>
     <ClCompile Include="CVisaCommunication.cpp">
       <Filter>communication</Filter>
     </ClCompile>
     <ClCompile Include="PyRunner.cpp">
       <Filter>PythonRunner</Filter>
+    </ClCompile>
+    <ClCompile Include="CSockt.cpp">
+      <Filter>communication\Socket\imple</Filter>
+    </ClCompile>
+    <ClCompile Include="CSocketUDP.cpp">
+      <Filter>communication\Socket\imple</Filter>
+    </ClCompile>
+    <ClCompile Include="CScoketTcp.cpp">
+      <Filter>communication\Socket\imple</Filter>
+    </ClCompile>
+    <ClCompile Include="CSocketInterface.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,9 +131,6 @@
     <ClInclude Include="CSerialPort.h">
       <Filter>communication</Filter>
     </ClInclude>
-    <ClInclude Include="CSockt.h">
-      <Filter>communication</Filter>
-    </ClInclude>
     <ClInclude Include="CVisaCommunication.h">
       <Filter>communication</Filter>
     </ClInclude>
@@ -124,6 +139,21 @@
     </ClInclude>
     <ClInclude Include="PyRunner.h">
       <Filter>PythonRunner</Filter>
+    </ClInclude>
+    <ClInclude Include="synchronizationwrap.hpp">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="CSockt.h">
+      <Filter>communication\Socket\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CSocketInterface.h">
+      <Filter>communication\Socket\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CSocketUDP.h">
+      <Filter>communication\Socket\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="CScoketTcp.h">
+      <Filter>communication\Socket\headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
