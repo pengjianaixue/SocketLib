@@ -3,11 +3,12 @@
 QTest::QTest(QWidget *parent): QMainWindow(parent),m_socktCommuni(nullptr)
 {
 	
-	m_socktCommuni = new CSockt("127.0.0.1", "8080", SOCKTTYPE::TCP, CLIENTTYPE::Server);
+	m_socktCommuni = new CSocket("127.0.0.1", "8080", SOCKTTYPE::TCP, CLIENTTYPE::Server);
 	ui.setupUi(this);
 	InitUi();
 	QObject::connect(this->ui.pushButton, &QPushButton::clicked,this, &QTest::CmdSend);
 	QObject::connect(this, &QTest::recvi, this, &QTest::DisplayRecvi);
+	connect(this->ui.pushButton_openserver, &QPushButton::clicked,this,&QTest::OpenServer);
 	
 
 }
@@ -34,17 +35,21 @@ void QTest::InitUi()
 	ui.comboBox_6->addItems(StrListSaItems);
 
 }
+bool QTest::OpenServer()
+{
+	if (!m_socktCommuni->IsConnect())
+	{
+		return m_socktCommuni->Connect();
+	}
+	return false;
+}
 int QTest::CmdSend()
 {
-
-	if(!m_socktCommuni->IsConnect())
-	{
-		m_socktCommuni->Connect();
-	}
+	
 	QString Cmd = ui.editcmd->text();
 	std::string recvi = "";
+	m_socktCommuni->SendData(Cmd.toStdString().c_str(), 3);
 	m_socktCommuni->Recvi(recvi, 1000);
-	m_socktCommuni->SendData(Cmd.toStdString(), 3);
 	emit this->recvi(recvi);
 	return 0;
 }

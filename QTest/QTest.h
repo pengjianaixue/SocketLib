@@ -13,10 +13,11 @@ public:
 private:
 	void InitUi();
 public slots:
-	int CmdSend();
+	int		CmdSend();
+	bool	OpenServer();
 private:
 	Ui::QTestClass ui;
-	CSockt  *m_socktCommuni;
+	CSocket  *m_socktCommuni;
 signals:
 	void  recvi(std::string recvi);
 public slots:

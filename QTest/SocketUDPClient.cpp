@@ -1,12 +1,15 @@
-#include "CSocketUDP.h"
+#include "SocketUDPClient.h"
 
 
 
 CSocketUDP::CSocketUDP()
 {
+
+
 }
 
 
 CSocketUDP::~CSocketUDP()
 {
+
 }

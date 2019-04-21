@@ -23,6 +23,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTextEdit>
 #include <QtWidgets/QToolBar>
@@ -38,6 +39,7 @@ public:
     QAction *actionLoadConfigFile;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
+    QGroupBox *groupBox;
     QGroupBox *groupBox_2;
     QVBoxLayout *verticalLayout;
     QLabel *label_7;
@@ -46,9 +48,11 @@ public:
     QHBoxLayout *horizontalLayout;
     QComboBox *comboBox_6;
     QLineEdit *editcmd;
+    QHBoxLayout *horizontalLayout_3;
+    QPushButton *pushButton_openserver;
+    QSpacerItem *horizontalSpacer;
     QPushButton *pushButton;
-    QGroupBox *groupBox;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_2;
     QVBoxLayout *verticalLayout_2;
     QLabel *label;
@@ -87,8 +91,11 @@ public:
         gridLayout->setSpacing(6);
         gridLayout->setContentsMargins(11, 11, 11, 11);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
-        groupBox_2 = new QGroupBox(centralWidget);
+        groupBox = new QGroupBox(centralWidget);
+        groupBox->setObjectName(QStringLiteral("groupBox"));
+        groupBox_2 = new QGroupBox(groupBox);
         groupBox_2->setObjectName(QStringLiteral("groupBox_2"));
+        groupBox_2->setGeometry(QRect(10, 340, 1011, 373));
         verticalLayout = new QVBoxLayout(groupBox_2);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -139,20 +146,33 @@ public:
 
         verticalLayout->addLayout(horizontalLayout);
 
+        horizontalLayout_3 = new QHBoxLayout();
+        horizontalLayout_3->setSpacing(6);
+        horizontalLayout_3->setObjectName(QStringLiteral("horizontalLayout_3"));
+        pushButton_openserver = new QPushButton(groupBox_2);
+        pushButton_openserver->setObjectName(QStringLiteral("pushButton_openserver"));
+
+        horizontalLayout_3->addWidget(pushButton_openserver);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_3->addItem(horizontalSpacer);
+
         pushButton = new QPushButton(groupBox_2);
         pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setAutoRepeat(true);
+        pushButton->setAutoRepeatDelay(10);
+        pushButton->setAutoRepeatInterval(5);
 
-        verticalLayout->addWidget(pushButton);
+        horizontalLayout_3->addWidget(pushButton);
 
 
-        gridLayout->addWidget(groupBox_2, 1, 0, 1, 1);
+        verticalLayout->addLayout(horizontalLayout_3);
 
-        groupBox = new QGroupBox(centralWidget);
-        groupBox->setObjectName(QStringLiteral("groupBox"));
-        widget = new QWidget(groupBox);
-        widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(15, 33, 941, 261));
-        horizontalLayout_2 = new QHBoxLayout(widget);
+        layoutWidget = new QWidget(groupBox);
+        layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
+        layoutWidget->setGeometry(QRect(15, 33, 941, 261));
+        horizontalLayout_2 = new QHBoxLayout(layoutWidget);
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
@@ -160,27 +180,27 @@ public:
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        label = new QLabel(widget);
+        label = new QLabel(layoutWidget);
         label->setObjectName(QStringLiteral("label"));
 
         verticalLayout_2->addWidget(label);
 
-        label_2 = new QLabel(widget);
+        label_2 = new QLabel(layoutWidget);
         label_2->setObjectName(QStringLiteral("label_2"));
 
         verticalLayout_2->addWidget(label_2);
 
-        label_3 = new QLabel(widget);
+        label_3 = new QLabel(layoutWidget);
         label_3->setObjectName(QStringLiteral("label_3"));
 
         verticalLayout_2->addWidget(label_3);
 
-        label_4 = new QLabel(widget);
+        label_4 = new QLabel(layoutWidget);
         label_4->setObjectName(QStringLiteral("label_4"));
 
         verticalLayout_2->addWidget(label_4);
 
-        label_5 = new QLabel(widget);
+        label_5 = new QLabel(layoutWidget);
         label_5->setObjectName(QStringLiteral("label_5"));
 
         verticalLayout_2->addWidget(label_5);
@@ -191,7 +211,7 @@ public:
         verticalLayout_3 = new QVBoxLayout();
         verticalLayout_3->setSpacing(6);
         verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        comboBox = new QComboBox(widget);
+        comboBox = new QComboBox(layoutWidget);
         comboBox->setObjectName(QStringLiteral("comboBox"));
         QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Fixed);
         sizePolicy3.setHorizontalStretch(0);
@@ -201,28 +221,28 @@ public:
 
         verticalLayout_3->addWidget(comboBox);
 
-        comboBox_2 = new QComboBox(widget);
+        comboBox_2 = new QComboBox(layoutWidget);
         comboBox_2->setObjectName(QStringLiteral("comboBox_2"));
         sizePolicy3.setHeightForWidth(comboBox_2->sizePolicy().hasHeightForWidth());
         comboBox_2->setSizePolicy(sizePolicy3);
 
         verticalLayout_3->addWidget(comboBox_2);
 
-        comboBox_3 = new QComboBox(widget);
+        comboBox_3 = new QComboBox(layoutWidget);
         comboBox_3->setObjectName(QStringLiteral("comboBox_3"));
         sizePolicy3.setHeightForWidth(comboBox_3->sizePolicy().hasHeightForWidth());
         comboBox_3->setSizePolicy(sizePolicy3);
 
         verticalLayout_3->addWidget(comboBox_3);
 
-        comboBox_4 = new QComboBox(widget);
+        comboBox_4 = new QComboBox(layoutWidget);
         comboBox_4->setObjectName(QStringLiteral("comboBox_4"));
         sizePolicy3.setHeightForWidth(comboBox_4->sizePolicy().hasHeightForWidth());
         comboBox_4->setSizePolicy(sizePolicy3);
 
         verticalLayout_3->addWidget(comboBox_4);
 
-        comboBox_5 = new QComboBox(widget);
+        comboBox_5 = new QComboBox(layoutWidget);
         comboBox_5->setObjectName(QStringLiteral("comboBox_5"));
         sizePolicy3.setHeightForWidth(comboBox_5->sizePolicy().hasHeightForWidth());
         comboBox_5->setSizePolicy(sizePolicy3);
@@ -266,12 +286,13 @@ public:
 #ifndef QT_NO_TOOLTIP
         actionLoadConfigFile->setToolTip(QApplication::translate("QTestClass", "LoadConfigFile", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
+        groupBox->setTitle(QApplication::translate("QTestClass", "Instrument Connect Param", Q_NULLPTR));
         groupBox_2->setTitle(QApplication::translate("QTestClass", "Instrument Command", Q_NULLPTR));
         label_7->setText(QApplication::translate("QTestClass", "Instrument Repository DisPlay", Q_NULLPTR));
         label_6->setText(QApplication::translate("QTestClass", "Send Instrument", Q_NULLPTR));
         comboBox_6->setCurrentText(QString());
+        pushButton_openserver->setText(QApplication::translate("QTestClass", "Open Server", Q_NULLPTR));
         pushButton->setText(QApplication::translate("QTestClass", "Send Command", Q_NULLPTR));
-        groupBox->setTitle(QApplication::translate("QTestClass", "Instrument Connect Param", Q_NULLPTR));
         label->setText(QApplication::translate("QTestClass", "SA", Q_NULLPTR));
         label_2->setText(QApplication::translate("QTestClass", "SG", Q_NULLPTR));
         label_3->setText(QApplication::translate("QTestClass", "ENA", Q_NULLPTR));

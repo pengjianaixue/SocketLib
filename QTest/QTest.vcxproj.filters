@@ -78,14 +78,17 @@
     <ClCompile Include="CSockt.cpp">
       <Filter>communication\Socket\imple</Filter>
     </ClCompile>
-    <ClCompile Include="CSocketUDP.cpp">
-      <Filter>communication\Socket\imple</Filter>
-    </ClCompile>
-    <ClCompile Include="CScoketTcp.cpp">
-      <Filter>communication\Socket\imple</Filter>
-    </ClCompile>
     <ClCompile Include="CSocketInterface.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoketTcpServer.cpp">
+      <Filter>communication\Socket\imple</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoketTcpClient.cpp">
+      <Filter>communication\Socket\imple</Filter>
+    </ClCompile>
+    <ClCompile Include="SocketUDPClient.cpp">
+      <Filter>communication\Socket\imple</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,13 +149,16 @@
     <ClInclude Include="CSockt.h">
       <Filter>communication\Socket\headers</Filter>
     </ClInclude>
-    <ClInclude Include="CSocketInterface.h">
+    <ClInclude Include="ScoketTcpServer.h">
       <Filter>communication\Socket\headers</Filter>
     </ClInclude>
-    <ClInclude Include="CSocketUDP.h">
+    <ClInclude Include="SocketUDPClient.h">
       <Filter>communication\Socket\headers</Filter>
     </ClInclude>
-    <ClInclude Include="CScoketTcp.h">
+    <ClInclude Include="ScoketTcpClient.h">
+      <Filter>communication\Socket\headers</Filter>
+    </ClInclude>
+    <ClInclude Include="SocketInterface.h">
       <Filter>communication\Socket\headers</Filter>
     </ClInclude>
   </ItemGroup>

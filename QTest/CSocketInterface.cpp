@@ -1,4 +1,4 @@
-#include "CSocketInterface.h"
+#include "SocketInterface.h"
 
 CScoketBase::CScoketBase(const std::string & IpAddr, const std::string & PortNum, SOCKTTYPE socktype, CLIENTTYPE clienttype)
 {

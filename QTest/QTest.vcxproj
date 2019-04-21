@@ -221,14 +221,15 @@
     <ClCompile Include="ClogServer.cpp" />
     <ClCompile Include="CSerialPort.cpp" />
     <ClCompile Include="CSocketInterface.cpp" />
-    <ClCompile Include="CSocketUDP.cpp" />
+    <ClCompile Include="SocketUDPClient.cpp" />
     <ClCompile Include="CSockt.cpp" />
     <ClCompile Include="CVisaCommunication.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PyRunner.cpp" />
     <ClCompile Include="QTest.cpp" />
     <ClCompile Include="RCF\RCFServer.cpp" />
-    <ClCompile Include="CScoketTcp.cpp" />
+    <ClCompile Include="ScoketTcpClient.cpp" />
+    <ClCompile Include="ScoketTcpServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="QTest.h" />
@@ -244,8 +245,8 @@
   <ItemGroup>
     <ClInclude Include="ClogServer.h" />
     <ClInclude Include="CSerialPort.h" />
-    <ClInclude Include="CSocketInterface.h" />
-    <ClInclude Include="CSocketUDP.h" />
+    <ClInclude Include="SocketInterface.h" />
+    <ClInclude Include="SocketUDPClient.h" />
     <ClInclude Include="CSockt.h" />
     <ClInclude Include="CVisaCommunication.h" />
     <ClInclude Include="PyRunner.h" />
@@ -253,7 +254,8 @@
     <ClInclude Include="RCF\RCFServer.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resoure.h" />
-    <ClInclude Include="CScoketTcp.h" />
+    <ClInclude Include="ScoketTcpClient.h" />
+    <ClInclude Include="ScoketTcpServer.h" />
     <ClInclude Include="synchronizationwrap.hpp" />
     <ClInclude Include="TypeDef.h" />
     <ClInclude Include="Utility.h" />

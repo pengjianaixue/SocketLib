@@ -29,13 +29,13 @@ typedef enum ClientType
 	Client = 0,
 	Server
 } CLIENTTYPE;
-class CSockt
+class CSocket
 {  
 
 public:
-	CSockt(const std::string &IpAddr = "127.0.0.1", const std::string &PortNum = "8080", 
+	CSocket(const std::string &IpAddr = "127.0.0.1", const std::string &PortNum = "8080", 
 				SOCKTTYPE socktype = SOCKTTYPE::TCP, CLIENTTYPE clienttype = CLIENTTYPE::Client);
-	virtual		~CSockt();
+	virtual		~CSocket();
 	bool		Connect();
 	bool		DisConnect();
 	bool		Isopen();
@@ -65,6 +65,7 @@ private:
 	std::mutex							m_server_recvi_var_mutex;
 	mutable CRITICAL_SECTION			m_Critical_Section; //  CriticalSection
 	char								*m_recvibuf;
+	HANDLE								m_hServerRecviThreadHandle;
 	//static std::atomic<unsigned int>	s_CriticalSectionCounter; // s_Critical_Section/Classinstance use Counter
 	
 private:
